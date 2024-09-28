@@ -1,0 +1,38 @@
+syntax="proto3";
+
+option go_package = "google.golang.org/grpc/examples/product/product";
+
+package product;
+
+service ProductService {
+  rpc GetProductById(SearchRequestById) returns (ProductMessage);
+  rpc GetProductList(SearchRequestList) returns (ProductListResponse);
+  rpc CreateProduct(ProductMessage) returns(OperationStatusResponse);
+  rpc UpdateProduct(ProductMessage) returns(OperationStatusResponse);
+  rpc RemoveProductById(SearchRequestById) returns(OperationStatusResponse);
+}
+
+message SearchRequestById {
+  uint32 id = 1;
+}
+
+message ProductMessage{
+  uint32 id = 1;
+  string name = 2;
+  uint32 price = 3;
+}
+
+message SearchRequestList {
+  uint32 page = 1;
+  uint32 pageSize = 2;
+}
+
+message ProductListResponse {
+  repeated ProductMessage  list = 1;
+}
+
+message OperationStatusResponse {
+  bool status = 1;
+  string error = 2;
+}
+
