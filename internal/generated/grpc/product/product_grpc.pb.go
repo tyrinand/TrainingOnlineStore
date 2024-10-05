@@ -30,7 +30,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProductServiceClient interface {
-	GetProductById(ctx context.Context, in *SearchRequestById, opts ...grpc.CallOption) (*ProductMessage, error)
+	GetProductById(ctx context.Context, in *SearchRequestById, opts ...grpc.CallOption) (*ProductItemResponse, error)
 	GetProductList(ctx context.Context, in *SearchRequestList, opts ...grpc.CallOption) (*ProductListResponse, error)
 	CreateProduct(ctx context.Context, in *ProductMessage, opts ...grpc.CallOption) (*OperationStatusResponse, error)
 	UpdateProduct(ctx context.Context, in *ProductMessage, opts ...grpc.CallOption) (*OperationStatusResponse, error)
@@ -45,9 +45,9 @@ func NewProductServiceClient(cc grpc.ClientConnInterface) ProductServiceClient {
 	return &productServiceClient{cc}
 }
 
-func (c *productServiceClient) GetProductById(ctx context.Context, in *SearchRequestById, opts ...grpc.CallOption) (*ProductMessage, error) {
+func (c *productServiceClient) GetProductById(ctx context.Context, in *SearchRequestById, opts ...grpc.CallOption) (*ProductItemResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ProductMessage)
+	out := new(ProductItemResponse)
 	err := c.cc.Invoke(ctx, ProductService_GetProductById_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -99,7 +99,7 @@ func (c *productServiceClient) RemoveProductById(ctx context.Context, in *Search
 // All implementations must embed UnimplementedProductServiceServer
 // for forward compatibility.
 type ProductServiceServer interface {
-	GetProductById(context.Context, *SearchRequestById) (*ProductMessage, error)
+	GetProductById(context.Context, *SearchRequestById) (*ProductItemResponse, error)
 	GetProductList(context.Context, *SearchRequestList) (*ProductListResponse, error)
 	CreateProduct(context.Context, *ProductMessage) (*OperationStatusResponse, error)
 	UpdateProduct(context.Context, *ProductMessage) (*OperationStatusResponse, error)
@@ -114,7 +114,7 @@ type ProductServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedProductServiceServer struct{}
 
-func (UnimplementedProductServiceServer) GetProductById(context.Context, *SearchRequestById) (*ProductMessage, error) {
+func (UnimplementedProductServiceServer) GetProductById(context.Context, *SearchRequestById) (*ProductItemResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductById not implemented")
 }
 func (UnimplementedProductServiceServer) GetProductList(context.Context, *SearchRequestList) (*ProductListResponse, error) {
