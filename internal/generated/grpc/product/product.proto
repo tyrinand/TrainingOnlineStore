@@ -5,7 +5,7 @@ option go_package = "google.golang.org/grpc/examples/product/product";
 package product;
 
 service ProductService {
-  rpc GetProductById(SearchRequestById) returns (ProductMessage);
+  rpc GetProductById(SearchRequestById) returns (ProductItemResponse);
   rpc GetProductList(SearchRequestList) returns (ProductListResponse);
   rpc CreateProduct(ProductMessage) returns(OperationStatusResponse);
   rpc UpdateProduct(ProductMessage) returns(OperationStatusResponse);
@@ -31,11 +31,11 @@ message ProductListResponse {
   repeated ProductMessage  list = 1;
 }
 
-message OperationStatusResponse {
-  bool status = 1;
-  string error = 2;
+message ProductItemResponse {
+  optional ProductMessage item = 1;
 }
 
-/*
-  stirng *error -- 
-*/
+message OperationStatusResponse {
+  bool status = 1;
+  optional string error = 2;
+}

@@ -1,4 +1,4 @@
-package create_product
+package updateproduct
 
 import (
 	"context"
@@ -13,6 +13,6 @@ func New(r repository) *usecase {
 	return &usecase{repo: r}
 }
 
-func (u *usecase) CreateProduct(ctx context.Context, product domain.Product) error {
-	return u.repo.CreateProduct(ctx, product)
+func (u *usecase) UpdateProduct(ctx context.Context, product domain.Product) error {
+	return u.repo.UpdateProduct(ctx, product)
 }
