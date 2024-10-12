@@ -6,5 +6,5 @@ import (
 )
 
 type repository interface {
-	GetProductById(ctx context.Context, id uint32) (*domain.Product, error)
+	GetProductById(ctx context.Context, id uint32) (domain.Product, error)
 }

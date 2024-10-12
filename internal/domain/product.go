@@ -5,8 +5,3 @@ type Product struct {
 	Name  string
 	Price uint32
 }
-
-type PageInfo struct {
-	Page     uint32
-	PageSize uint32
-}

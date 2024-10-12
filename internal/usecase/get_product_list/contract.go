@@ -6,5 +6,5 @@ import (
 )
 
 type repository interface {
-	GetProductList(ctx context.Context, page domain.PageInfo) ([]domain.Product, error)
+	GetProductList(ctx context.Context, page uint32, pageSize uint32) ([]domain.Product, error)
 }
