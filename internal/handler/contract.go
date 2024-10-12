@@ -10,11 +10,11 @@ type createProductUseCase interface {
 }
 
 type getProductByIdUseCase interface {
-	GetProductById(ctx context.Context, id uint32) (*domain.Product, error)
+	GetProductById(ctx context.Context, id uint32) (domain.Product, error)
 }
 
 type getProductListUseCase interface {
-	GetProductList(ctx context.Context, pageInfo domain.PageInfo) ([]domain.Product, error)
+	GetProductList(ctx context.Context, page uint32, pageSize uint32) ([]domain.Product, error)
 }
 
 type updateProductUseCase interface {
