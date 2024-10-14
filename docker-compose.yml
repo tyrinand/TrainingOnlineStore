@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgresdb
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: tyrinand
+      POSTGRES_PASSWORD: 12faga_LA123
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  
+  product-service:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "50051:50051"
+    depends_on:
+      - db
+
+volumes:
+  db_data:   

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"os"
 	pb "trainingOnlineStore/internal/generated/grpc/product"
 	"trainingOnlineStore/internal/handler"
 	"trainingOnlineStore/internal/repository"
@@ -15,6 +16,7 @@ import (
 	update "trainingOnlineStore/internal/usecase/update_product"
 
 	"github.com/jmoiron/sqlx"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
 )
@@ -25,7 +27,18 @@ var (
 
 func main() {
 
-	db, err := sqlx.Connect("postgres", "user=tyrinand password=12faga_LA123 dbname=mydatabase sslmode=disable")
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	dbUser := os.Getenv("DB_USER")
+	dbPassword := os.Getenv("DB_PASSWORD")
+	dbName := os.Getenv("DB_NAME")
+
+	connectStr := fmt.Sprintf("user=%s password=%s dbname=%s host=db sslmode=disable", dbUser, dbPassword, dbName)
+
+	db, err := sqlx.Connect("postgres", connectStr)
 	if err != nil {
 		log.Fatalln(err)
 	}
